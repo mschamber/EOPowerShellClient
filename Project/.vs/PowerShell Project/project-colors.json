@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "7cf4e81b-1d55-4234-996e-2631bc379466": {
+      "ProjectGuid": "7cf4e81b-1d55-4234-996e-2631bc379466",
+      "DisplayName": "PowerShell Project",
+      "ColorIndex": 0
+    }
+  },
+  "NextColorIndex": 1
+}

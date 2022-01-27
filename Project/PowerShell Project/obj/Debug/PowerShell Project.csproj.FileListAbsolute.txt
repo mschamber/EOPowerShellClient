@@ -20,3 +20,25 @@ C:\Users\michael.schamber\GitHub\EOPowerShellClient\Project\PowerShell Project\b
 C:\Users\michael.schamber\GitHub\EOPowerShellClient\Project\PowerShell Project\bin\Debug\ServiceStack.Common.xml
 C:\Users\michael.schamber\GitHub\EOPowerShellClient\Project\PowerShell Project\bin\Debug\ServiceStack.Interfaces.xml
 C:\Users\michael.schamber\GitHub\EOPowerShellClient\Project\PowerShell Project\bin\Debug\ServiceStack.Text.xml
+C:\Users\Michael\Documents\GitHub\EOPowerShellClient\Project\PowerShell Project\bin\Debug\PowerShell Project.exe.config
+C:\Users\Michael\Documents\GitHub\EOPowerShellClient\Project\PowerShell Project\bin\Debug\PowerShell Project.exe
+C:\Users\Michael\Documents\GitHub\EOPowerShellClient\Project\PowerShell Project\bin\Debug\PowerShell Project.pdb
+C:\Users\Michael\Documents\GitHub\EOPowerShellClient\Project\PowerShell Project\bin\Debug\ServiceStack.Client.dll
+C:\Users\Michael\Documents\GitHub\EOPowerShellClient\Project\PowerShell Project\bin\Debug\ServiceStack.Common.dll
+C:\Users\Michael\Documents\GitHub\EOPowerShellClient\Project\PowerShell Project\bin\Debug\ServiceStack.dll
+C:\Users\Michael\Documents\GitHub\EOPowerShellClient\Project\PowerShell Project\bin\Debug\ServiceStack.Interfaces.dll
+C:\Users\Michael\Documents\GitHub\EOPowerShellClient\Project\PowerShell Project\bin\Debug\ServiceStack.Text.dll
+C:\Users\Michael\Documents\GitHub\EOPowerShellClient\Project\PowerShell Project\bin\Debug\ServiceStack.xml
+C:\Users\Michael\Documents\GitHub\EOPowerShellClient\Project\PowerShell Project\bin\Debug\ServiceStack.Client.xml
+C:\Users\Michael\Documents\GitHub\EOPowerShellClient\Project\PowerShell Project\bin\Debug\ServiceStack.Common.xml
+C:\Users\Michael\Documents\GitHub\EOPowerShellClient\Project\PowerShell Project\bin\Debug\ServiceStack.Interfaces.xml
+C:\Users\Michael\Documents\GitHub\EOPowerShellClient\Project\PowerShell Project\bin\Debug\ServiceStack.Text.xml
+C:\Users\Michael\Documents\GitHub\EOPowerShellClient\Project\PowerShell Project\obj\Debug\PowerShell Project.csproj.AssemblyReference.cache
+C:\Users\Michael\Documents\GitHub\EOPowerShellClient\Project\PowerShell Project\obj\Debug\PowerShell Project.csproj.SuggestedBindingRedirects.cache
+C:\Users\Michael\Documents\GitHub\EOPowerShellClient\Project\PowerShell Project\obj\Debug\PowerShell_Project.Form1.resources
+C:\Users\Michael\Documents\GitHub\EOPowerShellClient\Project\PowerShell Project\obj\Debug\PowerShell_Project.Properties.Resources.resources
+C:\Users\Michael\Documents\GitHub\EOPowerShellClient\Project\PowerShell Project\obj\Debug\PowerShell Project.csproj.GenerateResource.cache
+C:\Users\Michael\Documents\GitHub\EOPowerShellClient\Project\PowerShell Project\obj\Debug\PowerShell Project.csproj.CoreCompileInputs.cache
+C:\Users\Michael\Documents\GitHub\EOPowerShellClient\Project\PowerShell Project\obj\Debug\PowerShell Project.csproj.CopyComplete
+C:\Users\Michael\Documents\GitHub\EOPowerShellClient\Project\PowerShell Project\obj\Debug\PowerShell Project.exe
+C:\Users\Michael\Documents\GitHub\EOPowerShellClient\Project\PowerShell Project\obj\Debug\PowerShell Project.pdb

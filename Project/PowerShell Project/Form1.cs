@@ -1,25 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using System.Management.Automation;
 using System.Collections.ObjectModel;
-using System.Security;
+using System.Management.Automation;
 using System.Management.Automation.Runspaces;
-using System.Management.Automation.Remoting;
+using System.Security;
+using System.Windows.Forms;
 
 namespace PowerShell_Project
 {
     public partial class Form1 : Form
     {
+        PowerShellCode psc;
         public Form1()
         {
             InitializeComponent();
+            psc = new PowerShellCode();
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -51,7 +45,7 @@ namespace PowerShell_Project
         }
         private void ConnectEO()
         {
-
+            PSCommand sc;
             Collection<PSObject> results;
 
             using (Runspace runspace = RunspaceFactory.CreateRunspace(RunspaceConfiguration.Create()))
@@ -62,38 +56,27 @@ namespace PowerShell_Project
                 // Load Exchange Online PowerShell V2 module
                 using (PowerShell shell = PowerShell.Create())
                 {
-                    Console.WriteLine("Running : Import-Module ExchangeOnlineManagement");
-
+                    sc = shell.Commands;
+                    Console.WriteLine("Setting: Execution Policy");
                     shell.Runspace = runspace;
-                    shell.Commands.AddScript("Import-Module ExchangeOnlineManagement");
+                    shell.Commands.AddCommand("Set-ExecutionPolicy");
+                    shell.Commands.AddParameter("ExecutionPolicy", "RemoteSigned");
+                    shell.Commands.AddParameter("Scope", "CurrentUser");
                     shell.Invoke();
-
+                    Console.WriteLine("Running : Import-Module ExchangeOnlineManagement");
+                    shell.Runspace = runspace;
+                    sc.AddCommand("Import-Module");
+                    sc.AddParameter("Name", "ExchangeOnlineManagement");
+                    shell.Invoke();
+                    
                     WriteStreams(shell.Streams);
                 }
 
                 // Connect to Exchange Online
                 ConnectExchangeOnlineUsingUserPrinsipalNameAndPassword(runspace);
-                //ConnectExchangeOnlineUsingPfxFile(runspace);
-                //ConnectExchangeOnlineUsingThumbprint(runspace);
-                //ConnectExchangeOnlineUsingX509Certificate2(runspace);
-
                 // Run Get-Mailbox
-                using (PowerShell shell = PowerShell.Create())
-                {
-                    Console.WriteLine("Running : Get-Mailbox -ResultSize Unlimited");
-
-                    shell.Runspace = runspace;
-                    shell.AddScript("Get-Mailbox -ResultSize Unlimited");
-
-                    results = shell.Invoke();
-
-                    foreach (PSObject result in results)
-                    {
-                        Console.WriteLine(result.Properties["UserPrincipalName"].Value.ToString());
-                    }
-
-                    WriteStreams(shell.Streams);
-                }
+                results = psc.GetMailbox(runspace);
+                fillMailboxes(results);
                 // Disconnect from Exchange Online
                 using (PowerShell shell = PowerShell.Create())
                 {
@@ -113,33 +96,30 @@ namespace PowerShell_Project
             }
         }
 
+        private void fillMailboxes(Collection<PSObject> results)
+        {
+            foreach (var item in results)
+            {
+                listBox1.Items.Add(item.Properties["DisplayName"].Value.ToString());
+            }
+            
+        }
+
         private void ConnectExchangeOnlineUsingUserPrinsipalNameAndPassword(Runspace runspace)
         {
+            PSCommand sc;
             using (PowerShell shell = PowerShell.Create())
             {
-                Console.WriteLine("Running : Connect-ExchangeOnline -Credential <Cred> -ShowProgress $false -ShowBanner $false");
-
-                string userPrincipalName = "michael.schamber@nrz5.onmicrosoft.com";
-                string password = "Dpskdsb5771!";
-
-                SecureString secureString = new SecureString();
-
-                foreach (var ch in password)
-                {
-                    secureString.AppendChar(ch);
-                }
-
-                PSCredential pSCredential = new PSCredential(userPrincipalName, secureString);
+                sc = shell.Commands;
+                Console.WriteLine("Running : Connect-ExchangeOnline with AppID");
 
                 shell.Runspace = runspace;
-                shell.Commands.AddCommand("Connect-ExchangeOnline");
-                shell.Commands.AddParameter("AppId", "8c4e320e-b0a2-4958-9d5d-17275b3be6ba");
-                shell.Commands.AddParameter("CertificateThumbprint", "64BC31A8FFFC7C86146448171784E6C0BE3F7CE4");
-                shell.Commands.AddParameter("Organization", "nrz5.onmicrosoft.com");
-                shell.Commands.AddParameter("ShowProgress", false);
-                shell.Commands.AddParameter("ShowBanner", false);
-                // shell.Commands.AddParameter("PSSessionOption", new PSSessionOption() { ProxyAccessType = ProxyAccessType.IEConfig });
-                //Connect-ExchangeOnline -AppId 8c4e320e-b0a2-4958-9d5d-17275b3be6ba -CertificateThumbprint "64BC31A8FFFC7C86146448171784E6C0BE3F7CE4" -Organization nrz5.onmicrosoft.com
+                sc.AddCommand("Connect-ExchangeOnline");
+                sc.AddParameter("AppId", "8c4e320e-b0a2-4958-9d5d-17275b3be6ba");
+                sc.AddParameter("CertificateThumbprint", "64BC31A8FFFC7C86146448171784E6C0BE3F7CE4");
+                sc.AddParameter("Organization", "nrz5.onmicrosoft.com");
+                sc.AddParameter("ShowProgress", false);
+                sc.AddParameter("ShowBanner", false);
                 shell.Invoke();
 
                 WriteStreams(shell.Streams);
@@ -158,6 +138,38 @@ namespace PowerShell_Project
         private void button1_Click(object sender, EventArgs e)
         {
             ConnectEO();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            installModule();
+        }
+
+        private void installModule()
+        {
+            // Load Exchange Online PowerShell V2 module
+            using (PowerShell shell = PowerShell.Create())
+            {
+                Console.WriteLine("Installing NuGet");
+                shell.Commands.AddCommand("Install-PackageProvider");
+                shell.Commands.AddParameter("Name", "NuGet");
+                shell.Commands.AddParameter("Confirm");
+                shell.Commands.AddParameter("Scope", "CurrentUser");
+                shell.Invoke();
+
+                Console.WriteLine("Installing Module ExchangeOnlineManagement");
+                shell.Commands.AddCommand("Install-Module");
+                shell.Commands.AddParameter("Name", "ExchangeOnlineMangement");
+                shell.Commands.AddParameter("Confirm");
+                shell.Commands.AddParameter("Scope", "CurrentUser");
+                shell.Invoke();
+                WriteStreams(shell.Streams);
+            }
+        }
+
+        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Console.WriteLine(listBox1.SelectedItem.ToString());
         }
     }
 }

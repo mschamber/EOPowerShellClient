@@ -133,11 +133,13 @@ namespace PowerShell_Project
 
                 shell.Runspace = runspace;
                 shell.Commands.AddCommand("Connect-ExchangeOnline");
-                shell.Commands.AddParameter("Credential", pSCredential);
+                shell.Commands.AddParameter("AppId", "8c4e320e-b0a2-4958-9d5d-17275b3be6ba");
+                shell.Commands.AddParameter("CertificateThumbprint", "64BC31A8FFFC7C86146448171784E6C0BE3F7CE4");
+                shell.Commands.AddParameter("Organization", "nrz5.onmicrosoft.com");
                 shell.Commands.AddParameter("ShowProgress", false);
                 shell.Commands.AddParameter("ShowBanner", false);
-               // shell.Commands.AddParameter("PSSessionOption", new PSSessionOption() { ProxyAccessType = ProxyAccessType.IEConfig });
-
+                // shell.Commands.AddParameter("PSSessionOption", new PSSessionOption() { ProxyAccessType = ProxyAccessType.IEConfig });
+                //Connect-ExchangeOnline -AppId 8c4e320e-b0a2-4958-9d5d-17275b3be6ba -CertificateThumbprint "64BC31A8FFFC7C86146448171784E6C0BE3F7CE4" -Organization nrz5.onmicrosoft.com
                 shell.Invoke();
 
                 WriteStreams(shell.Streams);
